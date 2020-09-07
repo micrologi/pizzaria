@@ -21,3 +21,17 @@ Abaixo a lista de softwares utilizados e respectivos links para Download
 ### Instalação
 
 Todos os softwares são para ambiente 64-bits. Instale na ordem dos softwares. Os softwares possuem instaladores (next, next..). Posteriormente, verifique via prompt de MS-DOS se os mesmos estão funcionando. 
+
+* [Configuração de ambiente NODE JS](https://github.com/cyz/Maratona-BOTs/blob/master/QuickStart/configurando-ambiente-nodejs.md)
+
+
+### Links Úteis
+
+| Descrição | Link |
+| ------ | ------ |
+| Desenvolvimento de BOT Node | [https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-add-qna?view=azure-bot-service-4.0&tabs=javascript] |
+| Repositorio de exemplos de BOTs | [https://github.com/Microsoft/BotBuilder-Samples/blob/main/README.md] |
+| Library NODE JS para trabalhar com LUIS e QNAMaker e serviços cognitivos | [https://www.npmjs.com/package/botbuilder-ai] |
+| Dispatch (QNA+LUIS) | [https://github.com/Microsoft/BotBuilder-Samples/tree/main/samples/javascript_nodejs/14.nlp-with-dispatch] |
+| Implantar o BOT no Azure | [https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-deploy-az-cli?view=azure-bot-service-4.0&tabs=csharp] |
+| Como submeter projeto | [https://youtu.be/UVeXPDIF10I] |

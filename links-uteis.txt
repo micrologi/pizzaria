@@ -1,0 +1,52 @@
+Como submeter projeto:
+https://youtu.be/UVeXPDIF10I
+
+LUIS e QNA Maker trabalhando em conjunto
+https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-dispatch?view=azure-bot-service-4.0&tabs=js
+
+
+Desenvolvimento de BOT Node:
+https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-add-qna?view=azure-bot-service-4.0&tabs=javascript
+
+Repositorio de exemplos de BOTs:
+https://github.com/Microsoft/BotBuilder-Samples/blob/main/README.md
+
+Library NODE JS para trabalhar com LUIS e QNAMaker e serviços cognitivos:
+https://www.npmjs.com/package/botbuilder-ai
+https://github.com/Microsoft/BotBuilder-Samples/tree/main/samples/javascript_nodejs/14.nlp-with-dispatch
+
+
+Implantar o BOT no Azure
+https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-deploy-az-cli?view=azure-bot-service-4.0&tabs=csharp
+
+
+https://github.com/microsoft/BotBuilder-Samples/tree/main/samples/javascript_nodejs/11.qnamaker
+https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-deploy-az-cli?view=azure-bot-service-4.0&tabs=javascript
+https://support.microsoft.com/pt-br/help/4464930/azure-api-management-troubleshooting-scenario-3-receiving-unauthorized
+https://vidasaudavel.einstein.br/coronavirus/covid-19-faq/
+https://github.com/Microsoft/BotBuilder-Samples/tree/main/samples/javascript_nodejs/14.nlp-with-dispatch
+https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-v4-luis?view=azure-bot-service-4.0&tabs=javascript
+https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-dispatch?view=azure-bot-service-4.0&tabs=js
+https://docs.microsoft.com/pt-br/azure/cognitive-services/luis/luis-concept-best-practices
+https://www.youtube.com/watch?v=Rmwz6bB_pVU
+
+Criação de bot (inicio)
+https://docs.microsoft.com/pt-br/azure/bot-service/?view=azure-bot-service-4.0
+
+Configuração de ambiente NODE JS
+https://github.com/cyz/Maratona-BOTs/blob/master/QuickStart/configurando-ambiente-nodejs.md
+
+Explicação serviços de um bot
+https://medium.com/@angelobelchior/curso-de-bots-2dae15154fe5
+
+Framework para desenvolvimento de BOTs
+https://github.com/microsoft/botframework-sdk
+
+Diversos conteúdos e likns uteis sobre BOT
+https://medium.com/@angelobelchior/curso-de-bots-2dae15154fe5
+
+POST /knowledgebases/d4e073dc-2988-4440-8d17-bad1f5160a4f/generateAnswer
+Host: https://rec-covid19.azurewebsites.net/qnamaker
+Authorization: EndpointKey 90edb110-e9b8-4c22-9b8b-02c37eddc060
+Content-Type: application/json
+{"question":"<Your question>"}

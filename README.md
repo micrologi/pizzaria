@@ -29,7 +29,7 @@ Todos os softwares são para ambiente 64-bits. Instale na ordem dos softwares. O
 
 | Descrição | Link |
 | ------ | ------ |
-| Desenvolvimento de BOT Node | [https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-add-qna?view=azure-bot-service-4.0&tabs=javascript] |
+| Desenvolvimento de BOT Node | https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-add-qna?view=azure-bot-service-4.0&tabs=javascript |
 | Repositorio de exemplos de BOTs | [https://github.com/Microsoft/BotBuilder-Samples/blob/main/README.md] |
 | Library NODE JS para trabalhar com LUIS e QNAMaker e serviços cognitivos | [https://www.npmjs.com/package/botbuilder-ai] |
 | Dispatch (QNA+LUIS) | [https://github.com/Microsoft/BotBuilder-Samples/tree/main/samples/javascript_nodejs/14.nlp-with-dispatch] |

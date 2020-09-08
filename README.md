@@ -7,11 +7,11 @@ Código de exemplo de BOT desenvolvido utilizando QNA Maker, LUIS, NodeJS e serv
 
 Abaixo a lista de softwares utilizados e respectivos links para Download
 
-* [Visual Studio Code](https://code.visualstudio.com/download#) - IDE de código com várias funcionalidades compátivel com várias plataformas.
-* [Git](https://git-scm.com/download/win) - Ferramenta de versionamento que permite desenvolvermos de forma sincronizada em equipe e criar versões de nosso código.
 * [NodeJS](https://nodejs.org/dist/v12.18.3/node-v12.18.3-x64.msi) - Framework javascript para construção de backends e serviços.
-* [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases/download/v4.10.0/BotFramework-Emulator-4.10.0-windows-setup.exe) - Emulador de BOTS, permitirá testarmos nosso BOT localmente.
+* [Git](https://git-scm.com/download/win) - Ferramenta de versionamento que permite desenvolvermos de forma sincronizada em equipe e criar versões de nosso código.
 * [SourceTree](https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.3.9.exe) - Interface visual para GIT, para não precisar executar comandos no terminal.
+* [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases/download/v4.10.0/BotFramework-Emulator-4.10.0-windows-setup.exe) - Emulador de BOTS, permitirá testarmos nosso BOT localmente.
+* [Visual Studio Code](https://code.visualstudio.com/download#) - IDE de código com várias funcionalidades compátivel com várias plataformas.
 
 
 ### Instalação

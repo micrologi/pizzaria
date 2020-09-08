@@ -1,13 +1,9 @@
-# Restaurante (BOT)
+# Pizzaria (BOT)
 
-Código de exemplo para projeto de BOT do Desafio Microsoft.
-
-## Atualizações
-
-  - Adição de lista de softwares utilizados
+Código de exemplo de BOT desenvolvido utilizando QNA Maker, LUIS, NodeJS e serviços cognitivos da Microsoft Azure.
 
 
-## Softwares Utilizados
+## Ambiente de desenvolvimento
 
 Abaixo a lista de softwares utilizados e respectivos links para Download
 

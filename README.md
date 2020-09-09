@@ -1,21 +1,19 @@
 # Pizzaria (BOT)
 
-Código de exemplo para projeto de BOT do Desafio Microsoft.
-
-## Atualizações
-
-  - Adição de lista de softwares utilizados
+Código de exemplo de BOT desenvolvido utilizando QNA Maker, LUIS, NodeJS e serviços cognitivos da Microsoft Azure.
 
 
-## Softwares Utilizados
+## Ambiente de desenvolvimento
 
 Abaixo a lista de softwares utilizados e respectivos links para Download
 
-* [Visual Studio Code](https://code.visualstudio.com/download#) - Um editor show de bola para codar em várias plataformas.
-* [Git](https://git-scm.com/download/win) - Loga nossos códigos criando versões (versionamento) e ajuda nosso código não virar uma bagunça.
-* [NodeJS](https://nodejs.org/dist/v12.18.3/node-v12.18.3-x64.msi) - Framework javascript para construção de backends.
-* [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases/download/v4.10.0/BotFramework-Emulator-4.10.0-windows-setup.exe) - Emulador de BOTS, permitirá testarmos nosso BOT em nosso PC.
-* [SourceTree](https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.3.9.exe) - Ferramenta visual para GIT, para não ter que ficar lembrando aqueles comandos chatos.
+* [Microsoft .NET Framework](https://www.microsoft.com/pt-BR/download/details.aspx?id=55167) - Microsoft .NET Framework Runtime de execução de aplicativos .NET.
+* [Python](https://www.python.org/ftp/python/3.8.5/python-3.8.5.exe) - Linguagem de programação para trabalhar rapidamente.
+* [NodeJS](https://nodejs.org/dist/v12.18.3/node-v12.18.3-x64.msi) - Framework javascript para construção de backends e serviços.
+* [Git](https://git-scm.com/download/win) - Ferramenta de versionamento que permite desenvolvermos de forma sincronizada em equipe e criar versões de nosso código.
+* [SourceTree](https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.3.9.exe) - Interface visual para GIT, para não precisar executar comandos no terminal.
+* [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases/download/v4.10.0/BotFramework-Emulator-4.10.0-windows-setup.exe) - Emulador de BOTS, permitirá testarmos nosso BOT localmente.
+* [Visual Studio Code](https://code.visualstudio.com/download#) - IDE de código com várias funcionalidades compátivel com várias plataformas.
 
 
 ### Instalação

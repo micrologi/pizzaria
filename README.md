@@ -7,6 +7,7 @@ Código de exemplo de BOT desenvolvido utilizando QNA Maker, LUIS, NodeJS e serv
 
 Abaixo a lista de softwares utilizados e respectivos links para Download
 
+* [Python](https://www.python.org/ftp/python/3.8.5/python-3.8.5.exe) - Linguagem de programação para trabalhar rapidamente.
 * [NodeJS](https://nodejs.org/dist/v12.18.3/node-v12.18.3-x64.msi) - Framework javascript para construção de backends e serviços.
 * [Git](https://git-scm.com/download/win) - Ferramenta de versionamento que permite desenvolvermos de forma sincronizada em equipe e criar versões de nosso código.
 * [SourceTree](https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.3.9.exe) - Interface visual para GIT, para não precisar executar comandos no terminal.

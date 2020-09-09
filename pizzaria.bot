@@ -1,0 +1,18 @@
+{
+    "name": "pizzaria",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "http://localhost:3978/api/messages",
+            "id": "6a06d3f0-f296-11ea-9205-31e83ecfe794",
+            "name": "http://localhost:3978/api/messages"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "overrides": null,
+    "path": "D:\\OneDrive - Senai\\Senai\\IA Azure Desafio\\bot\\pizzaria\\pizzaria.bot"
+}

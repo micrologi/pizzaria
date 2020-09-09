@@ -6,7 +6,7 @@ Código de exemplo de BOT desenvolvido utilizando QNA Maker, LUIS, NodeJS e serv
 ## Ambiente de desenvolvimento
 
 Abaixo a lista de softwares utilizados e respectivos links para Download
-
+ 
 * [Microsoft .NET Framework](https://www.microsoft.com/pt-BR/download/details.aspx?id=55167) - Microsoft .NET Framework Runtime de execução de aplicativos .NET.
 * [Python](https://www.python.org/ftp/python/3.8.5/python-3.8.5.exe) - Linguagem de programação para trabalhar rapidamente.
 * [NodeJS](https://nodejs.org/dist/v12.18.3/node-v12.18.3-x64.msi) - Framework javascript para construção de backends e serviços.

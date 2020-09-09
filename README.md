@@ -1,4 +1,4 @@
-# Restaurante (BOT)
+# Pizzaria (BOT)
 
 Código de exemplo para projeto de BOT do Desafio Microsoft.
 

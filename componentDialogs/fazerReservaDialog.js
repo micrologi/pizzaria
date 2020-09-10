@@ -1,6 +1,6 @@
 const {WaterfallDialog, ComponentDialog} = require('botbuilder-dialogs');
-
 const {ConfirmPrompt, ChoicePrompt, DateTimePrompt, NumberPrompt, TextPrompt} = require('botbuilder-dialogs');
+const {DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -9,9 +9,11 @@ const NUMBER_PROMPT = 'NUMBER_PROMPT';
 const DATETIME_PROMPT = 'DATETIME_PROMPT';
 const WATERFALL_DIALOG = 'WATERFALL_PROMPT';
 
+var endDialog = false;
+
 class FazerReservaDialog extends ComponentDialog {
 
-    constructor() {
+    constructor(conservsationState,userState) {
         super('fazerReservaDialog'); 
 
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
@@ -21,19 +23,16 @@ class FazerReservaDialog extends ComponentDialog {
         this.addDialog(new DateTimePrompt(DATETIME_PROMPT));
 
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
-            
+            this.iniciarReserva.bind(this), //Confirma se deseja reservar
+            this.obterNome.bind(this), //Pedi nome do cliente
+            this.obterNumeroPessoas.bind(this),  //Numero de pessoas
+            this.obterData.bind(this), //Data da reserva
+            this.obterHora.bind(this),  //Hora da reserva
+            this.confirmarReserva.bind(this), //Exibe resumo das informacoes da reserva e solicita confirmacao
+            this.resumoReserva.bind(this) //Exibe resumo das informacoes da reserva e solicita confirmacao                
         ]));
 
-        this.iniciarReserva.bind(this), //Confirma se deseja reservar
-        this.obterNome.bind(this), //Pedi nome do cliente
-        this.obterNumeroPessoas.bind(this),  //Numero de pessoas
-        this.obterData.bind(this), //Data da reserva
-        this.obterHora.bind(this),  //Hora da reserva
-        this.confirmarReserva.bind(this), //Exibe resumo das informacoes da reserva e solicita confirmacao
-        this.resumoReserva.bind(this) //Exibe resumo das informacoes da reserva e solicita confirmacao
-
         this.initialDialogId = WATERFALL_DIALOG;
-
     }
 
     async run(turnContext, accessor) {
@@ -50,12 +49,17 @@ class FazerReservaDialog extends ComponentDialog {
     }
 
     async iniciarReserva(step) {
+        endDialog = false;
         return await step.prompt(CONFIRM_PROMPT, 'Deseja realizar uma reserva?', ['Sim', 'Não']);
     }
 
     async obterNome(step) {
         if (step.result === true) {
-            return await step.prompt(TEXT_PROMPT, 'Qual o seu nome?');
+            return await step.prompt(TEXT_PROMPT, 'Qual o seu nome para a reserva?');
+        } else {
+            await step.context.sendActivity("Você não definiu ninguém para a reserva.");
+            endDialog = true;
+            return await step.endDialog();             
         }
     }
 
@@ -90,7 +94,11 @@ class FazerReservaDialog extends ComponentDialog {
 
     async resumoReserva(step) {
         if (step.result === true) {
-            await step.context.sendActivity('Reserva efetuada com sucesso. Seu código da reserva: 123');
+
+            let reservationId = Math.floor(Math.random() * Math.floor(1000000));
+
+            await step.context.sendActivity('Reserva efetuada com sucesso. Seu código da reserva: ' + reservationId);
+            endDialog = true;
             return await step.endDialog();
         }        
     }
@@ -98,6 +106,10 @@ class FazerReservaDialog extends ComponentDialog {
     async numeroPessoasValidator(promptContext) {
         return promptContext.recognized.succeeded && promptContext.recognized.value >= 1 && promptContext.recognized.value <= 50;
     }
+
+    async isDialogComplete(){
+        return endDialog;
+    }    
 
 }
 

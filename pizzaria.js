@@ -54,6 +54,8 @@ class Pizzaria extends ActivityHandler {
         await turnContext.sendActivity(resposta);
     }
 
+    // MAC - O dispatch roteia as entradas para o melhor modelo
+    // https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-dispatch?view=azure-bot-service-4.0&tabs=cs
     async dispatchToIntentAsync(context) {
 
         var currentIntent = '';

@@ -1,0 +1,18 @@
+- Certifica-se que sua versão do NPM é a mais atual:
+npm install -g npm
+
+- Gerencia as conversaçoes e requisições - turns
+npm install restify
+
+- Packages referente a funções do BOT
+npm install --save botbuilder-dialogs
+npm install --save botbuilder-ai
+
+- Permite trabalhar com arquivos .ENV (semelhante .INI)
+npm install dotenv
+
+- Package para trabalhar com banco de dados MySQL
+npm install mysql
+
+- Inicia serviço do Bot (estar na pasta do bot)
+npm start

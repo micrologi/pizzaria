@@ -4,6 +4,7 @@
 const { ActivityHandler, MessageFactory } = require('botbuilder');
 const { FazerReservaDialog } = require('./componentDialogs/fazerReservaDialog');
 const { LUISRecognizer, LuisRecognizer} = require('botbuilder-ai');
+const { CancelarReservaDialog } = require('./componentDialogs/cancelarReservaDialog');
 
 class Pizzaria extends ActivityHandler {
 
@@ -15,6 +16,7 @@ class Pizzaria extends ActivityHandler {
         this.dialogState = conversationState.createProperty("dialogState");
 
         this.fazerReservaDialog = new FazerReservaDialog(this.conversationState, this.userState);
+        this.cancelarReservaDialog = new CancelarReservaDialog(this.conversationState, this.userState);
 
         this.previousIntent = this.conversationState.createProperty("previousIntent");
         this.conversationData = this.conversationState.createProperty('conservationData');
@@ -108,8 +110,16 @@ class Pizzaria extends ActivityHandler {
 
             case 'Cancelar Reserva':
                 console.log("Cancelar Reserva");
-                break;
+                await this.conversationData.set(context, { endDialog: false });
+                await this.cancelarReservaDialog.run(context, this.dialogState);
+                conversationData.endDialog = await this.cancelarReservaDialog.isDialogComplete();
+                if (conversationData.endDialog) {
+                    await this.previousIntent.set(context, { intentName: null });
+                    await this.enviarAcoesSugeridas(context);
 
+                break;
+                }
+                
             default:
                 console.log("Intenção não tratada");
                 break;

@@ -2,6 +2,21 @@ const {WaterfallDialog, ComponentDialog} = require('botbuilder-dialogs');
 const {ConfirmPrompt, ChoicePrompt, DateTimePrompt, NumberPrompt, TextPrompt} = require('botbuilder-dialogs');
 const {DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 
+const mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "mysql.webagencia.com.br",
+    user: "senai",
+    password: "senai123",
+    port: "3306",
+    database: "senai"
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Conectado no banco de dados remoto.");
+});
+
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const TEXT_PROMPT = 'TEXT_PROMPT';
@@ -81,23 +96,42 @@ class FazerReservaDialog extends ComponentDialog {
     async confirmarReserva(step) {
         step.values.hora = step.result;
 
+        var data = JSON.parse(JSON.stringify(step.values.data));
+        var hora = JSON.parse(JSON.stringify(step.values.hora));
+
+        //console.log(step.values.data);
+        //console.log(data[0]['value']);
+
         var msg = `Verifique os dados da sua reserva:\n 
                     Nome: ${step.values.nome}\n
                     Pessoas: ${step.values.numeropessoas}\n
-                    Data: ${step.values.data}\n
-                    Hora: ${step.values.hora}\n`;
+                    Data: ${data[0]['value']}\n
+                    Hora: ${hora[0]['value']}\n`;
 
-        await step.context.sendActivity(msg);
-        
+        await step.context.sendActivity(msg);        
         return await step.prompt(CONFIRM_PROMPT, 'Confirma a reserva?', ['Sim', 'Não']);
     }
 
     async resumoReserva(step) {
         if (step.result === true) {
 
-            let reservationId = Math.floor(Math.random() * Math.floor(1000000));
+            var data = JSON.parse(JSON.stringify(step.values.data));
+            var hora = JSON.parse(JSON.stringify(step.values.hora));
+    
+            var sql = "";
+            sql += "insert into ";
+            sql += " reserva ";
+            sql += " (nome, qtdpessoas, data, hora) ";
+            sql += " values ";
+            sql += " ('" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data + "', '" + hora + "'); ";
 
-            await step.context.sendActivity('Reserva efetuada com sucesso. Seu código da reserva: ' + reservationId);
+            con.query(sql, async function (err, result) {
+                if (err) throw err;
+                console.log("Reserva inserida no banco de dados.");
+            });
+
+
+            await step.context.sendActivity('Reserva efetuada com sucesso.');
             endDialog = true;
             return await step.endDialog();
         }        

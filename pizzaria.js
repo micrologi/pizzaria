@@ -3,6 +3,7 @@
 
 const { ActivityHandler, MessageFactory } = require('botbuilder');
 const { FazerReservaDialog } = require('./componentDialogs/fazerReservaDialog');
+const { LUISRecognizer, LuisRecognizer} = require('botbuilder-ai');
 
 class Pizzaria extends ActivityHandler {
 
@@ -18,9 +19,21 @@ class Pizzaria extends ActivityHandler {
         this.previousIntent = this.conversationState.createProperty("previousIntent");
         this.conversationData = this.conversationState.createProperty('conservationData');
 
+        const dispatchRecognizer = new LuisRecognizer({
+            applicationId: process.env.LuisAppId,
+            endpointKey: process.env.LuisAPIKey,
+            endpoint: process.env.LuisAPIHostName
+        }, {
+            includeAllIntents: true
+            //includeInstanceData: true
+        }, true);
+        
         // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
         this.onMessage(async (context, next) => {
-            await this.dispatchToIntentAsync(context);
+            const luisResult = await dispatchRecognizer.recognize(context);
+            const intent = LuisRecognizer.topIntent(luisResult);
+            console.log(luisResult);
+            await this.dispatchToIntentAsync(context,intent);
             await next();
         });
 
@@ -56,7 +69,7 @@ class Pizzaria extends ActivityHandler {
 
     // MAC - O dispatch roteia as entradas para o melhor modelo
     // https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-dispatch?view=azure-bot-service-4.0&tabs=cs
-    async dispatchToIntentAsync(context) {
+    async dispatchToIntentAsync(context,intent) {
 
         var currentIntent = '';
         const previousIntent = await this.previousIntent.get(context, {});
@@ -65,14 +78,20 @@ class Pizzaria extends ActivityHandler {
         if (previousIntent.intentName && conversationData.endDialog === false) {
             currentIntent = previousIntent.intentName;
         } else if (previousIntent.intentName && conversationData.endDialog === true) {
-            currentIntent = context.activity.text;
+            //currentIntent = context.activity.text;
+            currentIntent = intent;
         } else {
-            currentIntent = context.activity.text;
-            await this.previousIntent.set(context, { intentName: context.activity.text });
+            //currentIntent = context.activity.text;
+            //await this.previousIntent.set(context, { intentName: context.activity.text });
+            currentIntent = intent;
+            await this.previousIntent.set(context, { intentName: intent });
         }
 
+        console.log('Intenção: ' + intent);
+
         switch (currentIntent) {
-            case 'Fazer Reserva':
+            //case 'Fazer Reserva':     //Intenções não podem conter espaços, por isso mudamos a forma como tratamos a intenção
+            case 'Fazer_Reserva':
                 console.log("Fazer Reserva");
                 await this.conversationData.set(context, { endDialog: false });
                 await this.fazerReservaDialog.run(context, this.dialogState);

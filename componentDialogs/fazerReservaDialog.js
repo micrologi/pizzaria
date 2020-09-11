@@ -50,7 +50,7 @@ class FazerReservaDialog extends ComponentDialog {
         this.initialDialogId = WATERFALL_DIALOG;
     }
 
-    async run(turnContext, accessor) {
+    async run(turnContext, accessor, entities) {
 
         const dialogSet = new DialogSet(accessor);
         dialogSet.add(this);
@@ -58,12 +58,15 @@ class FazerReservaDialog extends ComponentDialog {
         
         const results = await dialogContext.continueDialog();
         if (results.status === DialogTurnStatus.empty) {
-            await dialogContext.beginDialog(this.id);
+            await dialogContext.beginDialog(this.id, entities);
         }
 
     }
 
     async iniciarReserva(step) {
+
+        step.values.numeropessoas = step._info.options.numeropessoas[0];
+
         endDialog = false;
         return await step.prompt(CONFIRM_PROMPT, 'Deseja realizar uma reserva?', ['Sim', 'Não']);
     }
@@ -80,11 +83,19 @@ class FazerReservaDialog extends ComponentDialog {
 
     async obterNumeroPessoas(step) {
         step.values.nome = step.result;
-        return await step.prompt(NUMBER_PROMPT, 'Qual o número de pessoas (1-50)?');
+
+        if (!step.values.numeropessoas) {
+            return await step.prompt(NUMBER_PROMPT, 'Qual o número de pessoas (1-50)?');
+        } else {
+            return await step.continueDialog();
+        }
+
     }
 
     async obterData(step) {
-        step.values.numeropessoas = step.result;
+
+        if (!step.values.numeropessoas)
+            step.values.numeropessoas = step.result;
         return await step.prompt(DATETIME_PROMPT, 'Qual a data para a reserva?');
     }
 
@@ -98,9 +109,6 @@ class FazerReservaDialog extends ComponentDialog {
 
         var data = JSON.parse(JSON.stringify(step.values.data));
         var hora = JSON.parse(JSON.stringify(step.values.hora));
-
-        //console.log(step.values.data);
-        //console.log(data[0]['value']);
 
         var msg = `Verifique os dados da sua reserva:\n 
                     Nome: ${step.values.nome}\n
@@ -117,13 +125,13 @@ class FazerReservaDialog extends ComponentDialog {
 
             var data = JSON.parse(JSON.stringify(step.values.data));
             var hora = JSON.parse(JSON.stringify(step.values.hora));
-    
+        
             var sql = "";
             sql += "insert into ";
             sql += " reserva ";
             sql += " (nome, qtdpessoas, data, hora) ";
             sql += " values ";
-            sql += " ('" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data + "', '" + hora + "'); ";
+            sql += " ('" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data[0]['value'] + "', '" + hora[0]['value'] + "'); ";
 
             con.query(sql, async function (err, result) {
                 if (err) throw err;

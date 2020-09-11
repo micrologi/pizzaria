@@ -31,9 +31,12 @@ class Pizzaria extends ActivityHandler {
         // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
         this.onMessage(async (context, next) => {
             const luisResult = await dispatchRecognizer.recognize(context);
+            
             const intent = LuisRecognizer.topIntent(luisResult);
+            const entities = luisResult.entities;
+
             console.log(luisResult);
-            await this.dispatchToIntentAsync(context,intent);
+            await this.dispatchToIntentAsync(context,intent,entities);
             await next();
         });
 
@@ -69,7 +72,7 @@ class Pizzaria extends ActivityHandler {
 
     // MAC - O dispatch roteia as entradas para o melhor modelo
     // https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-dispatch?view=azure-bot-service-4.0&tabs=cs
-    async dispatchToIntentAsync(context,intent) {
+    async dispatchToIntentAsync(context,intent,entities) {
 
         var currentIntent = '';
         const previousIntent = await this.previousIntent.get(context, {});
@@ -94,7 +97,7 @@ class Pizzaria extends ActivityHandler {
             case 'Fazer_Reserva':
                 console.log("Fazer Reserva");
                 await this.conversationData.set(context, { endDialog: false });
-                await this.fazerReservaDialog.run(context, this.dialogState);
+                await this.fazerReservaDialog.run(context, this.dialogState, entities);
                 conversationData.endDialog = await this.fazerReservaDialog.isDialogComplete();
                 if (conversationData.endDialog) {
                     await this.previousIntent.set(context, { intentName: null });

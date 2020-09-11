@@ -1,3 +1,5 @@
+*** COMANDOS DO TERMINAL UTILIZADO NESTE PROJETO ***
+
 - Certifica-se que sua versão do NPM é a mais atual:
 npm install -g npm
 

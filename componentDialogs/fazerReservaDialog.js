@@ -64,8 +64,10 @@ class FazerReservaDialog extends ComponentDialog {
     }
 
     async iniciarReserva(step) {
-
-        step.values.numeropessoas = step._info.options.numeropessoas[0];
+        console.log('1');
+        console.log(step._info.options.numeropessoas);
+       // step.values.numeropessoas = step._info.options.numeropessoas[0];
+        console.log('2');
 
         endDialog = false;
         return await step.prompt(CONFIRM_PROMPT, 'Deseja realizar uma reserva?', ['Sim', 'Não']);

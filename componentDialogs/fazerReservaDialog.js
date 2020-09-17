@@ -64,6 +64,7 @@ class FazerReservaDialog extends ComponentDialog {
 
     async iniciarReserva(step) {
 
+        // MAC - Checa se foi preenchido numeropessoas
         if ('numeropessoas' in step._info.options) {
             step.values.numeropessoas = step._info.options.numeropessoas[0];
         }

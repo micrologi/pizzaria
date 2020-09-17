@@ -64,8 +64,9 @@ class FazerReservaDialog extends ComponentDialog {
 
     async iniciarReserva(step) {
 
-        //console.log(step._info.options);
-        step.values.numeropessoas = step._info.options.numeropessoas[0];
+        if ('numeropessoas' in step._info.options) {
+            step.values.numeropessoas = step._info.options.numeropessoas[0];
+        }
         
         endDialog = false;
         return await step.prompt(CONFIRM_PROMPT, 'Deseja realizar uma reserva?', ['Sim', 'Não']);
@@ -101,7 +102,7 @@ class FazerReservaDialog extends ComponentDialog {
 
     async obterHora(step) {
         step.values.data = step.result;
-        return await step.prompt(DATETIME_PROMPT, 'Qual a hora para a reserva (18:00 - 23:00)?');
+        return await step.prompt(DATETIME_PROMPT, 'Qual a hora para a reserva (18:00:00 - 23:00:00)?');
     }
 
     async confirmarReserva(step) {
@@ -127,15 +128,15 @@ class FazerReservaDialog extends ComponentDialog {
             var data = JSON.parse(JSON.stringify(step.values.data));
             var hora = JSON.parse(JSON.stringify(step.values.hora));
 
-            let reservationId = Math.floor(Math.random() * Math.floor(1000));
+            let reservationId = 1+Math.floor(Math.random() * Math.floor(100000));
         
             // MAC - Insere a reserva 
             var sql = "";
             sql += " insert into ";
             sql += " reserva ";
-            sql += " (id, nome, qtdpessoas, data, hora) ";
+            sql += " (id, nome, qtdpessoas, data, hora, status) ";
             sql += " values ";
-            sql += " (" + reservationId + ", '" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data[0]['value'] + "', '" + hora[0]['value'] + "'); ";
+            sql += " (" + reservationId + ", '" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data[0]['value'] + "', '" + hora[0]['value'] + "', 1); ";
             con.query(sql, async function (err, result) {
                 if (err) throw err;
             });

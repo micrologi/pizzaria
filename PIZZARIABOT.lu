@@ -1,0 +1,63 @@
+
+> LUIS application information
+> !# @app.name = PIZZARIABOT
+> !# @app.desc = PIZZARIABOT NPL
+> !# @app.versionId = 0.1
+> !# @app.culture = pt-br
+> !# @app.luis_schema_version = 7.0.0
+> !# @app.tokenizerVersion = 1.0.0
+
+
+> # Intent definitions
+
+## Cancelar Reserva
+- desejo cancelar minha reserva
+- minha reserva de número {@id=6}, por favor, cancele-a
+- por favor, cancele a reserva {@id=5}
+- quero cancelar a reserva {@id=2}
+
+
+@ intent Cancelar Reserva usesFeature numeropessoas
+
+## Fazer Reserva
+- desejo fazer uma reserva para {@numeropessoas=1} pessoa
+- fazer reserva
+- gostaria de reservar uma mesa para {@numeropessoas=2} pessoas
+- gostaria de reservar uma mesa para {@numeropessoas=3} pessoas
+- quero fazer uma reserva para {@numeropessoas=10} pessoas
+- quero uma mesa para {@numeropessoas=5} pessoas
+
+
+@ intent Fazer Reserva usesFeature numeropessoas
+
+## None
+- há passáros voando
+- minha roupa está suja
+- o dia está lindo
+- o livro está em cima da mesa
+- os cachorros estão latindo
+
+
+@ intent None usesFeature numeropessoas
+
+> # Entity definitions
+
+@ ml id usesFeature numeropessoas
+
+@ ml numeropessoas usesFeature numeropessoas
+
+
+> # PREBUILT Entity definitions
+
+
+> # Phrase list definitions
+
+@ phraselist numeropessoas enabledForAllModels = 
+	- 2,3,4,5,6,dois,três,nove,10,40,quarenta,vinte,42,39,37
+
+
+> # List entities
+
+> # RegEx entities
+
+

@@ -14,7 +14,6 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
     if (err) throw err;
-    console.log("Conectado no banco de dados remoto.");
 });
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
@@ -64,11 +63,10 @@ class FazerReservaDialog extends ComponentDialog {
     }
 
     async iniciarReserva(step) {
-        console.log('1');
-        console.log(step._info.options.numeropessoas);
-       // step.values.numeropessoas = step._info.options.numeropessoas[0];
-        console.log('2');
 
+        //console.log(step._info.options);
+        step.values.numeropessoas = step._info.options.numeropessoas[0];
+        
         endDialog = false;
         return await step.prompt(CONFIRM_PROMPT, 'Deseja realizar uma reserva?', ['Sim', 'Não']);
     }
@@ -128,20 +126,25 @@ class FazerReservaDialog extends ComponentDialog {
             var data = JSON.parse(JSON.stringify(step.values.data));
             var hora = JSON.parse(JSON.stringify(step.values.hora));
         
+            // MAC - Insere a reserva 
             var sql = "";
-            sql += "insert into ";
+            sql += " insert into ";
             sql += " reserva ";
             sql += " (nome, qtdpessoas, data, hora) ";
             sql += " values ";
             sql += " ('" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data[0]['value'] + "', '" + hora[0]['value'] + "'); ";
-
             con.query(sql, async function (err, result) {
                 if (err) throw err;
-                console.log("Reserva inserida no banco de dados.");
             });
 
-
-            await step.context.sendActivity('Reserva efetuada com sucesso.');
+            // MAC - Exibe codigo para o cliente 
+            sql = "";
+            sql += " select max(id) as id from reserva; ";
+            con.query(sql, async function (err, result) {
+                if (err) throw err;
+                await step.context.sendActivity("Reserva efetuada com sucesso. Guarde seu codigo de reserva: " + result[0].id);
+            });
+            
             endDialog = true;
             return await step.endDialog();
         }        

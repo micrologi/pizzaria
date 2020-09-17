@@ -123,27 +123,24 @@ class FazerReservaDialog extends ComponentDialog {
     async resumoReserva(step) {
         if (step.result === true) {
 
+
             var data = JSON.parse(JSON.stringify(step.values.data));
             var hora = JSON.parse(JSON.stringify(step.values.hora));
+
+            let reservationId = Math.floor(Math.random() * Math.floor(1000));
         
             // MAC - Insere a reserva 
             var sql = "";
             sql += " insert into ";
             sql += " reserva ";
-            sql += " (nome, qtdpessoas, data, hora) ";
+            sql += " (id, nome, qtdpessoas, data, hora) ";
             sql += " values ";
-            sql += " ('" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data[0]['value'] + "', '" + hora[0]['value'] + "'); ";
+            sql += " (" + reservationId + ", '" + step.values.nome + "', " + step.values.numeropessoas + ", '" + data[0]['value'] + "', '" + hora[0]['value'] + "'); ";
             con.query(sql, async function (err, result) {
                 if (err) throw err;
             });
 
-            // MAC - Exibe codigo para o cliente 
-            sql = "";
-            sql += " select max(id) as id from reserva; ";
-            con.query(sql, async function (err, result) {
-                if (err) throw err;
-                await step.context.sendActivity("Reserva efetuada com sucesso. Guarde seu codigo de reserva: " + result[0].id);
-            });
+            await step.context.sendActivity("Reserva efetuada com sucesso. Guarde seu codigo de reserva: " + reservationId);
             
             endDialog = true;
             return await step.endDialog();

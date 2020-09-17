@@ -91,6 +91,10 @@ class Pizzaria extends ActivityHandler {
             await this.previousIntent.set(context, { intentName: intent });
         }
 
+
+        console.log(currentIntent);
+
+
         switch (currentIntent) {
             //case 'Fazer Reserva':     //Intenções não podem conter espaços, por isso mudamos a forma como tratamos a intenção
             case 'Fazer_Reserva':
@@ -104,7 +108,8 @@ class Pizzaria extends ActivityHandler {
                 }
                 break;
 
-            case 'Cancelar Reserva':
+            case 'Cancelar_Reserva':
+                console.log('Cancelar Reserva')
                 await this.conversationData.set(context, { endDialog: false });
                 await this.cancelarReservaDialog.run(context, this.dialogState, entities);
                 conversationData.endDialog = await this.cancelarReservaDialog.isDialogComplete();

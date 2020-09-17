@@ -77,10 +77,8 @@ class CancelarReservaDialog extends ComponentDialog {
         // MAC - Update  a reserva 
         var sql = "";
         sql += " update reserva  ";
-        sql += " set status_marlon = 2 ";
+        sql += " set status = 2 ";
         sql += " where id=" + step.values.idreserva;
-
-        console.log(sql);
 
         con.query(sql, async function (err, result) {
             if (err) throw err;

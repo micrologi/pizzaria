@@ -3,18 +3,7 @@ const {ConfirmPrompt, ChoicePrompt, DateTimePrompt, NumberPrompt, TextPrompt} = 
 const {DialogSet, DialogTurnStatus } = require('botbuilder-dialogs');
 
 const mysql = require('mysql');
-
-var con = mysql.createConnection({
-    host: "mysql.webagencia.com.br",
-    user: "senai",
-    password: "senai123",
-    port: "3306",
-    database: "senai"
-});
-
-con.connect(function (err) {
-    if (err) throw err;
-});
+var   con = "";
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -30,6 +19,19 @@ class FazerReservaDialog extends ComponentDialog {
     constructor(conservsationState,userState) {
         super('fazerReservaDialog'); 
 
+        con = mysql.createConnection({
+            host: process.env.DB_host,
+            user: process.env.DB_user,
+            password: process.env.DB_password,
+            port: process.env.DB_port,
+            database: process.env.DB_database
+        });
+        
+        con.connect(function (err) {
+            if (err) throw err;
+        });
+        
+        
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
         this.addDialog(new TextPrompt(TEXT_PROMPT));
@@ -129,7 +131,7 @@ class FazerReservaDialog extends ComponentDialog {
             var data = JSON.parse(JSON.stringify(step.values.data));
             var hora = JSON.parse(JSON.stringify(step.values.hora));
 
-            let reservationId = 1+Math.floor(Math.random() * Math.floor(100000));
+            let reservationId = 1+Math.floor(Math.random() * Math.floor(10000));
         
             // MAC - Insere a reserva 
             var sql = "";

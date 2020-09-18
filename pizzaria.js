@@ -88,6 +88,7 @@ class Pizzaria extends ActivityHandler {
             await this.previousIntent.set(context, { intentName: intent });
         }
 
+        console.log(currentIntent);
 
         switch (currentIntent) {
             //case 'Fazer Reserva':     //Intenções não podem conter espaços, por isso mudamos a forma como tratamos a intenção
@@ -110,8 +111,8 @@ class Pizzaria extends ActivityHandler {
                     await this.previousIntent.set(context, { intentName: null });
                     await this.enviarAcoesSugeridas(context);
 
-                break;
                 }
+                break;
                 
             default:
                 console.log("Intenção não tratada");

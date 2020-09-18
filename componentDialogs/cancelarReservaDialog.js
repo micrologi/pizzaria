@@ -12,7 +12,6 @@ const NUMBER_PROMPT = 'NUMBER_PROMPT';
 const DATETIME_PROMPT = 'DATETIME_PROMPT';
 const WATERFALL_DIALOG = 'WATERFALL_PROMPT';
 
-
 var endDialog = false;
 
 class CancelarReservaDialog extends ComponentDialog {
@@ -20,7 +19,7 @@ class CancelarReservaDialog extends ComponentDialog {
     constructor(conservsationState, userState) {
         super('cancelarReservaDialog');
 
-        var con = mysql.createConnection({
+        con = mysql.createConnection({
             host: process.env.DB_host,
             user: process.env.DB_user,
             password: process.env.DB_password,
@@ -47,7 +46,7 @@ class CancelarReservaDialog extends ComponentDialog {
         this.initialDialogId = WATERFALL_DIALOG;
     }
 
-    async run(turnContext, accessor) {
+    async run(turnContext, accessor, entities) {
 
         const dialogSet = new DialogSet(accessor);
         dialogSet.add(this);
@@ -55,31 +54,47 @@ class CancelarReservaDialog extends ComponentDialog {
 
         const results = await dialogContext.continueDialog();
         if (results.status === DialogTurnStatus.empty) {
-            await dialogContext.beginDialog(this.id);
+            await dialogContext.beginDialog(this.id, entities);
         }
 
     }
 
     async cancelarReserva(step) {
         endDialog = false;
+
         return await step.prompt(CONFIRM_PROMPT, 'Deseja cancelar sua reserva?', ['Sim', 'Não']);
     }
 
     async obtercodigo(step) {
+
+        //console.log(step._info.options);
+
+        if ('id' in step._info.options) {
+            step.values.id = step._info.options.id[0];
+        }
+
         if (step.result === true) {
-            return await step.prompt(NUMBER_PROMPT, 'Qual o código da reserva?');
+
+            if (!step.values.id) {
+                return await step.prompt(NUMBER_PROMPT, 'Qual o código da reserva?');
+            } else {
+                return await step.continueDialog();
+            }    
+
         }
     }
 
 
     async reservaCancelada(step) {
-        step.values.idreserva = step.result;
+        if (!step.values.id) {
+            step.values.id = step.result;
+        }
 
         // MAC - Update  a reserva 
         var sql = "";
         sql += " update reserva  ";
         sql += " set status = 2 ";
-        sql += " where id=" + step.values.idreserva;
+        sql += " where id=" + step.values.id;
 
         con.query(sql, async function (err, result) {
             if (err) throw err;

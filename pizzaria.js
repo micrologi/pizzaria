@@ -1,6 +1,7 @@
 const { ActivityHandler, MessageFactory } = require('botbuilder');
+const { LuisRecognizer, QnAMaker } = require('botbuilder-ai');
+
 const { FazerReservaDialog } = require('./componentDialogs/fazerReservaDialog');
-const { LUISRecognizer, LuisRecognizer} = require('botbuilder-ai');
 const { CancelarReservaDialog } = require('./componentDialogs/cancelarReservaDialog');
 
 class Pizzaria extends ActivityHandler {
@@ -18,6 +19,7 @@ class Pizzaria extends ActivityHandler {
         this.previousIntent = this.conversationState.createProperty("previousIntent");
         this.conversationData = this.conversationState.createProperty('conservationData');
 
+        // MAC - LUIS Integração
         const dispatchRecognizer = new LuisRecognizer({
             applicationId: process.env.LuisAppId,
             endpointKey: process.env.LuisAPIKey,
@@ -26,15 +28,23 @@ class Pizzaria extends ActivityHandler {
             includeAllIntents: true
             //includeInstanceData: true
         }, true);
-        
+
+        // MAC - QNA Integração
+        const qnaMaker = new QnAMaker({
+            knowledgeBaseId: process.env.QnAknowledgeBaseId,
+            endpointKey: process.env.QnAEndpointKey,
+            host: process.env.QnAEndpointHostName
+        });
+        this.qnaMaker = qnaMaker;
+
         // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
         this.onMessage(async (context, next) => {
             const luisResult = await dispatchRecognizer.recognize(context);
-            
+
             const intent = LuisRecognizer.topIntent(luisResult);
             const entities = luisResult.entities;
 
-            await this.dispatchToIntentAsync(context,intent,entities);
+            await this.dispatchToIntentAsync(context, intent, entities);
             await next();
         });
 
@@ -70,7 +80,7 @@ class Pizzaria extends ActivityHandler {
 
     // MAC - O dispatch roteia as entradas para o melhor modelo
     // https://docs.microsoft.com/pt-br/azure/bot-service/bot-builder-tutorial-dispatch?view=azure-bot-service-4.0&tabs=cs
-    async dispatchToIntentAsync(context,intent,entities) {
+    async dispatchToIntentAsync(context, intent, entities) {
 
         var currentIntent = '';
         const previousIntent = await this.previousIntent.get(context, {});
@@ -90,6 +100,7 @@ class Pizzaria extends ActivityHandler {
 
         console.log(currentIntent);
 
+        // MAC - Tratamento via LUIS
         switch (currentIntent) {
             //case 'Fazer Reserva':     //Intenções não podem conter espaços, por isso mudamos a forma como tratamos a intenção
             case 'Fazer_Reserva':
@@ -113,9 +124,19 @@ class Pizzaria extends ActivityHandler {
 
                 }
                 break;
-                
+
+            // MAC - Tratamento via QNA (Se nenhuma intenção do LUIS, trata com QNA)
             default:
-                console.log("Intenção não tratada");
+                var result = await this.qnaMaker.getAnswers(context);
+
+                if (result[0]) {
+                    await context.sendActivity(`${result[0].answer}`);
+                } else {
+                    // MAC - Se não achou a resposta no QNA, exibe uma mensagem padrão e dá o menu de Ações Sugeridas
+                    await context.sendActivity('Não consegui compreender o que deseja.');
+                    await this.enviarAcoesSugeridas(context);
+                }
+
                 break;
         }
     }

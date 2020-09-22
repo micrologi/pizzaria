@@ -4,7 +4,7 @@
 npm install -g npm
 
 - Gerencia as conversaçoes e requisições - turns
-npm install restify
+npm install --save restify
 
 - Packages referente a funções do BOT
 npm install --save botbuilder
@@ -12,13 +12,15 @@ npm install --save botbuilder-dialogs
 npm install --save botbuilder-ai
 
 - Packages para o Custom Vision - Cognitivo da Microsoft
-npm install @azure/cognitiveservices-customvision-prediction
+npm install --save @azure/cognitiveservices-customvision-prediction
 
 - Permite trabalhar com arquivos .ENV (semelhante .INI)
-npm install dotenv
+npm install --save dotenv
 
 - Package para trabalhar com banco de dados MySQL
-npm install mysql
+npm install --save mysql
 
 - Inicia serviço do Bot (estar na pasta do bot)
 npm start
+
+Observação: O parametro -g instala globalmente os packages e --save atualiza as dependências do pacote.

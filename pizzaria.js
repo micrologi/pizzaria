@@ -3,6 +3,9 @@ const { LuisRecognizer, QnAMaker } = require('botbuilder-ai');
 
 const { FazerReservaDialog } = require('./componentDialogs/fazerReservaDialog');
 const { CancelarReservaDialog } = require('./componentDialogs/cancelarReservaDialog');
+const { IdentificarPizzaDialog } = require('./componentDialogs/identificarPizzaDialog');
+
+const { AttachmentsBot } = require('./componentDialogs/attachmentsBot');
 
 class Pizzaria extends ActivityHandler {
 
@@ -15,6 +18,9 @@ class Pizzaria extends ActivityHandler {
 
         this.fazerReservaDialog = new FazerReservaDialog(this.conversationState, this.userState);
         this.cancelarReservaDialog = new CancelarReservaDialog(this.conversationState, this.userState);
+        this.identificarPizzaDialog = new IdentificarPizzaDialog(this.conversationState, this.userState);
+
+        this.attachmentsBot = new AttachmentsBot(this.conversationState, this.userState);
 
         this.previousIntent = this.conversationState.createProperty("previousIntent");
         this.conversationData = this.conversationState.createProperty('conservationData');
@@ -98,7 +104,8 @@ class Pizzaria extends ActivityHandler {
             await this.previousIntent.set(context, { intentName: intent });
         }
 
-        console.log(currentIntent);
+        console.log("Intenção: " + currentIntent);
+        //console.log(context);
 
         // MAC - Tratamento via LUIS
         switch (currentIntent) {
@@ -110,7 +117,6 @@ class Pizzaria extends ActivityHandler {
                 if (conversationData.endDialog) {
                     await this.previousIntent.set(context, { intentName: null });
                     await this.enviarAcoesSugeridas(context);
-
                 }
                 break;
 
@@ -121,20 +127,48 @@ class Pizzaria extends ActivityHandler {
                 if (conversationData.endDialog) {
                     await this.previousIntent.set(context, { intentName: null });
                     await this.enviarAcoesSugeridas(context);
-
                 }
                 break;
 
-            // MAC - Tratamento via QNA (Se nenhuma intenção do LUIS, trata com QNA)
-            default:
-                var result = await this.qnaMaker.getAnswers(context);
-
-                if (result[0]) {
-                    await context.sendActivity(`${result[0].answer}`);
-                } else {
-                    // MAC - Se não achou a resposta no QNA, exibe uma mensagem padrão e dá o menu de Ações Sugeridas
-                    await context.sendActivity('Não consegui compreender o que deseja.');
+            case 'Verificar_Sabor':
+                await this.conversationData.set(context, { endDialog: false });
+                await this.attachmentsBot.run(context);
+                conversationData.endDialog = await this.identificarPizzaDialog.isDialogComplete();
+                if (conversationData.endDialog) {
+                    await this.previousIntent.set(context, { intentName: null });
                     await this.enviarAcoesSugeridas(context);
+                }
+
+                break;
+
+            default:
+
+                if (('attachments' in context.activity) && (context.activity['attachments'][0].contentType == 'image/jpeg')) {
+
+                    // MAC - Tratamento de anexo  
+                    //console.log(context.activity['attachments'][0].contentUrl);
+                    //console.log(context.activity['attachments'][0].contentType);
+                    
+                    await this.conversationData.set(context, { endDialog: false });
+                    await this.identificarPizzaDialog.run(context, this.dialogState, entities);
+                    conversationData.endDialog = await this.identificarPizzaDialog.isDialogComplete();
+                    if (conversationData.endDialog) {
+                        await this.previousIntent.set(context, { intentName: null });
+                        await this.enviarAcoesSugeridas(context);
+                    }
+
+                } else {
+
+                    // MAC - Tratamento via QNA (Se nenhuma intenção do LUIS, trata com QNA)
+                    var result = await this.qnaMaker.getAnswers(context);
+
+                    if (result[0]) {
+                        await context.sendActivity(`${result[0].answer}`);
+                    } else {
+                        // MAC - Se não achou a resposta no QNA, exibe uma mensagem padrão e dá o menu de Ações Sugeridas
+                        await context.sendActivity('Não consegui compreender o que deseja.');
+                        await this.enviarAcoesSugeridas(context);
+                    }
                 }
 
                 break;

@@ -16,7 +16,10 @@
         "url": "https://github.com"
     },
     "dependencies": {
-        "botbuilder": "~4.10.1",
+        "@azure/cognitiveservices-customvision-prediction": "^5.1.2",
+        "azure-cognitiveservices-customvision-prediction": "^3.0.0",
+        "azure-cognitiveservices-customvision-training": "^3.0.0",
+        "botbuilder": "^4.10.3",
         "botbuilder-ai": "^4.10.3",
         "botbuilder-dialogs": "^4.10.1",
         "dotenv": "^8.2.0",

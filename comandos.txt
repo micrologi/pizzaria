@@ -11,6 +11,9 @@ npm install --save botbuilder
 npm install --save botbuilder-dialogs
 npm install --save botbuilder-ai
 
+- Packages para o Custom Vision - Cognitivo da Microsoft
+npm install @azure/cognitiveservices-customvision-prediction
+
 - Permite trabalhar com arquivos .ENV (semelhante .INI)
 npm install dotenv
 

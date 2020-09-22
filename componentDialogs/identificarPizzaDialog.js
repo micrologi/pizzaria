@@ -54,15 +54,13 @@ class IdentificarPizzaDialog extends ComponentDialog {
 
         //console.log(step.context.activity['attachments'][0].contentUrl);
 
-        console.log(result);
+        console.log(step.context.activity['attachments'][0].contentUrl );
 
-        await client
+        client
             .classifyImageUrl(process.env.CustonVisionProjectId, process.env.CustonVisionIteration,
                 { url: step.context.activity['attachments'][0].contentUrl })
             .then(result => {
-                if ('predictions' in result) {
-                    
-                }
+                console.log(result);
             })
             .catch(err => {
                 //step.context.sendActivity("Não consegui identificar a pizza nessa imagem. Tente enviar outra imagem!");

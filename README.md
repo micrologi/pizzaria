@@ -2,7 +2,6 @@
 
 Código de exemplo de BOT desenvolvido utilizando QNA Maker, LUIS, NodeJS e serviços cognitivos da Microsoft Azure.
 
-
 ## Ambiente de desenvolvimento
 
 Abaixo a lista de softwares utilizados e respectivos links para Download
@@ -14,14 +13,15 @@ Abaixo a lista de softwares utilizados e respectivos links para Download
 * [SourceTree](https://product-downloads.atlassian.com/software/sourcetree/windows/ga/SourceTreeSetup-3.3.9.exe) - Interface visual para GIT, para não precisar executar comandos no terminal.
 * [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases/download/v4.10.0/BotFramework-Emulator-4.10.0-windows-setup.exe) - Emulador de BOTS, permitirá testarmos nosso BOT localmente.
 * [Visual Studio Code](https://code.visualstudio.com/download#) - IDE de código com várias funcionalidades compátivel com várias plataformas.
-
+* [Ngrok](https://ngrok.com/) - Permite criar tuneis entre um endereço público acessivel e nossa máquina local, mesmo através de firewalls.
 
 ### Instalação
 
-Todos os softwares são para ambiente 64-bits. Instale na ordem dos softwares. Os softwares possuem instaladores (next, next..). Posteriormente, verifique via prompt de MS-DOS se os mesmos estão funcionando. 
+Acompanhe o vídeo "04 - Ambiente de Desenvolvimento" para saber como proceder com a instalação. Todos os softwares são para ambiente 64-bits. Instale na ordem dos softwares acima. Os softwares possuem instaladores (next, next..). Posteriormente, verifique via prompt de MS-DOS se os mesmos estão funcionando. 
 
-* [Configuração de ambiente NODE JS](https://github.com/cyz/Maratona-BOTs/blob/master/QuickStart/configurando-ambiente-nodejs.md)
-
+### Vídeo Tutoriais
+* [04 - Ambiente de Desenvolvimento](https://youtu.be/7HDay4TZdTw)
+* [07 - Node Packages + Echo Bot](https://youtu.be/J9VPajWrxxg)
 
 ### Links Úteis
 

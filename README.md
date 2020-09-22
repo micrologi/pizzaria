@@ -23,6 +23,9 @@ Acompanhe o vídeo "04 - Ambiente de Desenvolvimento" para saber como proceder c
 * [04 - Ambiente de Desenvolvimento](https://youtu.be/7HDay4TZdTw)
 * [07 - Node Packages + Echo Bot](https://youtu.be/J9VPajWrxxg)
 
+### Desenvolvedores
+* "Marlon Andrei de Carvalho" <marlon@micrologi.com.br>
+
 ### Links Úteis
 
 | Descrição | Link |
